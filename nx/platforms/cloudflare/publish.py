@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from requests_toolbelt import MultipartEncoder
 
 __all__ = [
-    'bundle', 'publish',
+    'cf_bundle', 'cf_publish',
 ]
 
 CF_API_URL = os.getenv('CF_API_URL', 'https://api.cloudflare.com/client/v4/')
@@ -33,11 +33,12 @@ def read_credentials(path: Path | str = DEFAULT_CREDENTIALS_PATH) -> Credentials
         return Credentials(**json.load(cred_file))
 
 
-def bundle():
+def cf_bundle(bundle_path: str) -> None:
+    # TODO: Render generated.js
     raise NotImplementedError
 
 
-def publish(*, worker_name: str, bundle_path: str, domain_name: str):
+def cf_publish(worker_name: str, bundle_path: str, domain_name: str) -> None:
     creds = read_credentials()
     session = requests.Session()
     session.headers.update({
